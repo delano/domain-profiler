@@ -2,15 +2,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper.rb')
 require 'domain-profiler/whois'
 
-describe Whois do
+describe DomainProfiler::Whois do
   before (:all) do
     filename = File.expand_path(File.dirname(__FILE__) + '/fixtures/zombo.com.raw.dump')
     zombo_com_data = `cat #{filename}`
     filename = File.expand_path(File.dirname(__FILE__) + '/fixtures/furbo.org.raw.dump')
     furbo_org_data = `cat #{filename}`
-    @zombo = Whois.new
+    @zombo = DomainProfiler::Whois.new
     @zombo.parse(zombo_com_data)
-    @furbo = Whois.new
+    @furbo = DomainProfiler::Whois.new
     @furbo.parse(furbo_org_data)
   end
 
@@ -20,18 +20,18 @@ describe Whois do
   end
 
   it "is able to deal with no data" do
-    whois = Whois.new
+    whois = DomainProfiler::Whois.new
     whois.registrar.should == ['Unknown']
   end
 
   it "is able to deal with nil input" do
-    whois = Whois.new
+    whois = DomainProfiler::Whois.new
     whois.parse(nil)
     whois.registrar.should == ['Unknown']
   end
 
   it "is able to deal with empty string input" do
-    whois = Whois.new
+    whois = DomainProfiler::Whois.new
     whois.parse('')
     whois.registrar.should == ['Unknown']
   end

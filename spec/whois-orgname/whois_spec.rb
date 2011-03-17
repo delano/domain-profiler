@@ -2,9 +2,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper.rb')
 require 'domain-profiler/whois-orgname'
 
-describe WhoisOrgName do
+describe DomainProfiler::WhoisOrgName do
   before (:all) do
-    @whois = WhoisOrgName.new('4.2.2.2', false)
+    @whois = DomainProfiler::WhoisOrgName.new('4.2.2.2', false)
   end
 
   it "is fetching information from ARIN" do

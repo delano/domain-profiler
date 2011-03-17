@@ -2,11 +2,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper.rb')
 require 'domain-profiler/dns'
 
-describe DNS do
+describe DomainProfiler::DNS do
   before(:all) do
     filename = File.expand_path(File.dirname(__FILE__) + '/fixtures/dns.raw.dump')
     data = `cat #{filename}`
-    @dns = DNS.new
+    @dns = DomainProfiler::DNS.new
     @dns.parse(data)
   end
 
@@ -43,33 +43,33 @@ describe DNS do
   end
 
   it "DNSType is able to deal with empty input" do
-    empty = DNSType.new('')
+    empty = DomainProfiler::DNSType.new('')
     empty.ttl.should == :none
   end
 
   it "DNSType is able to deal with nil input" do
-    empty = DNSType.new(nil)
+    empty = DomainProfiler::DNSType.new(nil)
     empty.ttl.should == :none
   end
 
   it "DNSQuery is able to deal with empty input" do
-    empty = DNSQuery.new('')
-    empty.a.should.is_a?(DNSType) == true
+    empty = DomainProfiler::DNSQuery.new('')
+    empty.a.should.is_a?(DomainProfiler::DNSType) == true
   end
 
   it "DNSQuery is able to deal with nil input" do
-    empty = DNSQuery.new(nil)
-    empty.a.should.is_a?(DNSType) == true
+    empty = DomainProfiler::DNSQuery.new(nil)
+    empty.a.should.is_a?(DomainProfiler::DNSType) == true
   end
 
   it " is able to deal with empty input" do
-    empty = DNS.new
+    empty = DomainProfiler::DNS.new
     empty.parse('')
     empty.a[0].ttl.should == :none
   end
 
   it "is able to deal with nil input" do
-    empty = DNS.new
+    empty = DomainProfiler::DNS.new
     empty.parse(nil)
     empty.a[0].ttl.should == :none
   end
@@ -77,7 +77,7 @@ describe DNS do
   it "is able to deal with missing MX records" do
     filename = File.expand_path(File.dirname(__FILE__) + '/fixtures/furbo.org.raw.dump')
     data = `cat #{filename}`
-    @dns = DNS.new
+    @dns = DomainProfiler::DNS.new
     @dns.parse(data)
     @dns.mx[0].host.should == :none
   end
@@ -85,7 +85,7 @@ describe DNS do
   it "is able to deal with data from go.com" do
     filename = File.expand_path(File.dirname(__FILE__) + '/fixtures/go.com.raw.dump')
     data = `cat #{filename}`
-    @dns = DNS.new
+    @dns = DomainProfiler::DNS.new
     @dns.parse(data)
     @dns.a[0].answer.should == '198.105.193.70'
   end

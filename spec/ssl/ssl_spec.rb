@@ -2,11 +2,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper.rb')
 require 'domain-profiler/ssl'
 
-describe SSL do
+describe DomainProfiler::SSL do
   before (:all) do
     filename = File.expand_path(File.dirname(__FILE__) + '/fixtures/openssl.raw.dump')
     data = `cat #{filename}`
-    @ssl = SSL.new
+    @ssl = DomainProfiler::SSL.new
     @ssl.parse(data)
   end
 
@@ -29,20 +29,20 @@ describe SSL do
   it "knows the name of the certificate authority on a certificate with validation errors" do
     filename = File.expand_path(File.dirname(__FILE__) + '/fixtures/openssl.single.raw.dump')
     data = `cat #{filename}`
-    ssl = SSL.new
+    ssl = DomainProfiler::SSL.new
     ssl.parse(data)
     ssl.ca.should == ['Thawte Consulting cc']
   end
 
   it "is able to deal with no data" do
-    empty = SSL.new
+    empty = DomainProfiler::SSL.new
     empty.ca.should == [:none]
     empty.cn.should == [:none]
     empty.expires.should == [:none]
   end
 
   it "is able to deal with an empty string as input" do
-    empty = SSL.new
+    empty = DomainProfiler::SSL.new
     empty.parse('')
     empty.ca.should == [:none]
     empty.cn.should == [:none]
